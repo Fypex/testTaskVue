@@ -8,8 +8,6 @@ npm install
 ```
 cm .env.example .env
 ```
-## Env
-```
 Set url to VUE_APP_API_URL
 ```
 ### Compiles and hot-reloads for development
