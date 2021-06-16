@@ -10,18 +10,28 @@
         <router-link to="/about">{{user.name}}</router-link>
         <a href="#" @click.prevent="signOut">Sign out</a>
       </div>
-        <a class="link cursor-pointer">Cart</a>
-
+      <div>
+        <a v-on:click="toggle" class="link cursor-pointer" v-bind:class="{'router-link-exact-active': !isActive}">Cart</a>
+        <Cart @toggle-cart="toggle" v-bind:isActive="isActive"></Cart>
+      </div>
     </div>
     <router-view/>
   </div>
 </template>
 <script>
   import {mapActions, mapGetters} from 'vuex'
+  import Cart from './components/Cart'
   export default {
+    data(){
+      return {
+        isActive: true,
+        loading: false,
+      }
+    },
     mounted() {
       this.checkSignIn();
       this.getProducts();
+      this.cartRestore();
     },
     computed: {
       ...mapGetters({
@@ -32,10 +42,18 @@
     },
     methods: {
       ...mapActions({
+        cartRestoreAction: 'cart/productsRestore',
         productsAction: 'products/getProducts',
         signOutAction: 'auth/signOut',
         checkSignInAction: 'auth/checkSignIn'
       }),
+
+      toggle: function(value){
+        this.isActive = !this.isActive
+      },
+      cartRestore(){
+        this.cartRestoreAction();
+      },
       async getProducts() {
         await this.productsAction()
       },
@@ -45,6 +63,9 @@
       async signOut () {
         await this.signOutAction()
       }
+    },
+    components:{
+      Cart
     }
   }
 </script>
@@ -60,6 +81,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  min-height: 100vh;
 }
 #nav {
   padding: 15px;

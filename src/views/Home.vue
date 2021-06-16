@@ -4,25 +4,46 @@
         <div class="products">
             <div v-for="product in products" class="product">
                 {{product.name}} ({{product.price}}$)
+                <div>
+                    <button v-on:click="setProductAction({
+                        'product': product,
+                        'total': product.price,
+                        'subtotal': product.price,
+                        'amount' : 1
+                    })">Add To Cart</button>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapActions, mapGetters} from 'vuex'
     export default {
         name: 'Home',
+        data(){
+            return {
+                amount: []
+            }
+        },
         computed: {
             ...mapGetters({
                 products: 'products/products',
             })
         },
+        methods: {
+            ...mapActions({
+                setProductAction: 'cart/setProduct'
+            }),
+        }
     }
 </script>
 <style scoped lang="scss">
     .preloader{
         margin: 0 auto;
+    }
+    button{
+        padding: 5px;
     }
     .products{
 
