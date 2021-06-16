@@ -4,7 +4,14 @@
 ```
 npm install
 ```
-
+## Env
+```
+cm .env.example .env
+```
+## Env
+```
+Set url to VUE_APP_API_URL
+```
 ### Compiles and hot-reloads for development
 ```
 npm run serve
@@ -14,6 +21,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
